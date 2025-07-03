@@ -1,6 +1,7 @@
 package javabank;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class BankSystem {
@@ -24,7 +25,9 @@ public class BankSystem {
 
 			switch(choice) {
 				case "1":
-//					int result = createAccount();
+					boolean result = createAccount();
+					if (result) System.out.println("Account created successfully!");
+					else System.out.println("[ERROR] Please enter a valid number. Try again.");
 					break;
 				case "2":
 					viewAllAccounts();
@@ -46,33 +49,55 @@ public class BankSystem {
 		}
 	}
 
-//	private static int createAccount() {
-//		String accountName, accountNumber, initialDepositChoice;
-//		System.out.print("Enter Account Number: "); accountNumber = in.next();
-//		System.out.print("Enter Holder Name: "); accountName = in.next();
-//
-//		double initialDepositAmount; boolean checkInitialDepositInput = true;
-//		while(checkInitialDepositInput) {
-//			System.out.print("Initial deposit? (yes/no): "); initialDepositChoice = in.next();
-//			if(initialDepositChoice.toLowerCase().equals("yes")) {
-//				System.out.print("Enter initial deposit amount: "); initialDepositAmount = in.nextDouble();
-//				if (initialDepositAmount >= 0) {
-//					BankAccount newAccount = new BankAccount(accountNumber, accountName, initialDepositAmount);
-//					bankAccounts.add(newAccount);
-//					System.out.println("Account created successfully!");
-//				}
-//			} else if (initialDepositChoice.toLowerCase().equals("no")) {
-//				checkInitialDepositInput = false;
-//			}
-//		}
-//	}
+	//	---	METHODS
+	private static boolean createAccount() {
+
+		String accountName, accountNumber, initialDepositChoice;
+
+		System.out.print("Enter Account Number: ");
+			accountNumber = in.next();
+		if (!isValidAccountNumber(accountNumber)) return false;
+
+		System.out.print("Enter Holder Name: ");
+			accountName = in.next();
+
+		double initialDepositAmount;
+		while(true) {
+			System.out.print("Initial deposit? (yes/no): "); initialDepositChoice = in.next();
+			if(initialDepositChoice.equalsIgnoreCase("yes")) {
+				while(true) {
+					try {
+						System.out.print("Enter initial deposit amount: ");
+						initialDepositAmount = Double.parseDouble(in.next());
+						if (initialDepositAmount >= 0) {
+							BankAccount newAccount = new BankAccount(accountNumber, accountName, initialDepositAmount);
+							bankAccounts.add(newAccount);
+							return true;
+						}
+					} catch (NumberFormatException e) {
+						return false;
+					}
+				}
+			} else if (initialDepositChoice.equalsIgnoreCase("no")) {
+				BankAccount newAccount = new BankAccount(accountNumber, accountName);
+				bankAccounts.add(newAccount);
+				return true;
+			}
+		}
+	}
 
 	private static void viewAllAccounts() {
+		System.out.println("");
 		System.out.println("=== View All Accounts ===");
 		for (int i=0; i<bankAccounts.size(); i++) {
 			bankAccounts.get(i).displayInformation();
 			System.out.println("");
 		}
 		System.out.println("===================== END");
+	}
+
+	//	--- CHECKERS
+	private static boolean isValidAccountNumber(String accountNumber) {
+		return accountNumber != null && accountNumber.matches("-?\\d+(\\.\\d+)?([Ee][+-]?\\d+)?");
 	}
 }

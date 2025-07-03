@@ -9,6 +9,7 @@ public class BankAccount {
 	public BankAccount(String accountNumber, String accountName) {
 		this.accountNumber = accountNumber;
 		this.accountName = accountName;
+		this.availableBalance = 0;
 	}
 
 	public BankAccount(String accountNumber, String accountName, double deposit) {
@@ -37,7 +38,7 @@ public class BankAccount {
 	public void displayInformation() {
 		System.out.printf("Account Number: %s\n", this.accountNumber);
 		System.out.printf("Holder Name: %s\n", this.accountName);
-		System.out.printf("Account Number: %d\n", this.availableBalance);
+		System.out.printf("Available Balance: %f\n", this.availableBalance);
 	}
 
 //	public String getAccountNumber() {
