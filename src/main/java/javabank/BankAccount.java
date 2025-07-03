@@ -34,9 +34,11 @@ public class BankAccount {
 //
 //	}
 
-//	public void displayInformation() {
-//
-//	}
+	public void displayInformation() {
+		System.out.printf("Account Number: %s\n", this.accountNumber);
+		System.out.printf("Holder Name: %s\n", this.accountName);
+		System.out.printf("Account Number: %d\n", this.availableBalance);
+	}
 
 //	public String getAccountNumber() {
 //		return this.accountNumber;
