@@ -6,9 +6,25 @@ public class BankAccount {
 	private String accountName;
 	private double availableBalance;
 
-	public BankAccount() {
-
+	public BankAccount(String accountNumber, String accountName) {
+		this.accountNumber = accountNumber;
+		this.accountName = accountName;
 	}
+
+	public BankAccount(String accountNumber, String accountName, double deposit) {
+		this.accountNumber = accountNumber;
+		this.accountName = accountName;
+		this.availableBalance = deposit;
+	}
+
+	//	GETTERS
+	public String getAccountName() { return accountName; }
+	public String getAccountNumber() { return accountNumber; }
+	public double getAvailableBalance() { return availableBalance; }
+
+	//	SETTERS
+	public void setAccountName(String newAccountName) { this.accountName = newAccountName; }
+	public void setAccountNumber(String newAccountNumber) { this.accountNumber = newAccountNumber; }
 
 //	public void withdraw() {
 //
