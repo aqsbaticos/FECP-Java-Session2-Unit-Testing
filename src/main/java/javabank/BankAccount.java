@@ -41,8 +41,4 @@ public class BankAccount {
 		System.out.printf("Available Balance: %f\n", this.availableBalance);
 	}
 
-//	public String getAccountNumber() {
-//		return this.accountNumber;
-//	}
-
 }
