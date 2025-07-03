@@ -26,14 +26,18 @@ public class BankAccount {
 	//	SETTERS
 	public void setAccountName(String newAccountName) { this.accountName = newAccountName; }
 	public void setAccountNumber(String newAccountNumber) { this.accountNumber = newAccountNumber; }
+	void setAvailableBalance(double amount) { this.availableBalance = amount; }
 
-//	public void withdraw() {
-//
-//	}
+	public boolean withdraw(double amount) {
+		if (this.availableBalance-amount >= 0) {
+			this.setAvailableBalance(this.availableBalance-amount);
+			return true;
+		} else return false;
+	}
 
-//	public void deposit() {
-//
-//	}
+	public void deposit(double amount) {
+		this.setAvailableBalance(this.availableBalance+amount);
+	}
 
 	public void displayInformation() {
 		System.out.printf("Account Number: %s\n", this.accountNumber);

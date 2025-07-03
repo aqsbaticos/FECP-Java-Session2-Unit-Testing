@@ -33,11 +33,17 @@ public class BankSystem {
 					viewAllAccounts();
 					break;
 				case "3":
-					viewBalance();
+					result = viewBalance();
 					break;
 				case "4":
+					result = depositMoneyTo();
+					if (result) System.out.println("Deposit transaction successful!");
+					else System.out.println("Deposit failed. Try again.");
 					break;
 				case "5":
+					result = withdrawMoneyFrom();
+					if (result) System.out.println("Withdraw transaction successful!");
+					else System.out.println("Withdrawal failed. Try again.");
 					break;
 				case "0":
 					isRunning = false;
@@ -87,17 +93,62 @@ public class BankSystem {
 		}
 	}
 
-	private static void viewAllAccounts() {
+	private static boolean withdrawMoneyFrom() {
 		System.out.println("");
-		System.out.println("=== View All Accounts ===");
-		for (int i=0; i<bankAccounts.size(); i++) {
-			bankAccounts.get(i).displayInformation();
-			System.out.println("");
+		System.out.println("=== Withdrawal ===");
+		System.out.print("Enter account number: ");
+		String accountNumber = in.next();
+		for (BankAccount account: bankAccounts) {
+			if (accountNumber.equalsIgnoreCase(account.getAccountNumber())) {
+				System.out.print("Enter amount to withdraw: ");
+				try {
+					boolean result = account.withdraw(Double.parseDouble(in.next()));
+					if (result) return true;
+					else return false;
+				} catch (NumberFormatException e) {
+					System.out.println("Invalid amount.");
+					return false;
+				}
+			}
 		}
-		System.out.println("===================== END");
+		System.out.println("Account doesn't exist.");
+		return false;
 	}
 
-	private static void viewBalance() {
+	private static boolean depositMoneyTo() {
+		System.out.println();
+		System.out.println("=== Deposit ===");
+		System.out.print("Enter account number: ");
+		String accountNumber = in.next();
+		for (BankAccount account: bankAccounts) {
+			if (accountNumber.equalsIgnoreCase(account.getAccountNumber())) {
+				System.out.print("Enter amount to deposit: ");
+				try {
+					account.deposit(Double.parseDouble(in.next()));
+					return true;
+				} catch (NumberFormatException e) {
+					System.out.println("Invalid amount.");
+					return false;
+				}
+			}
+		}
+		System.out.println("Account doesn't exist.");
+		return false;
+	}
+
+	private static void viewAllAccounts() {
+		if (!bankAccounts.isEmpty()) {
+			System.out.println("");
+			System.out.println("=== View All Accounts ===");
+			for (int i = 0; i < bankAccounts.size(); i++) {
+				bankAccounts.get(i).displayInformation();
+				System.out.println("");
+			}
+			System.out.println("===================== END");
+		} else System.out.println("No accounts found.");
+	}
+
+	private static boolean viewBalance() {
 		System.out.println("");
 		System.out.println("=== Account Balance ===");
 		System.out.print("Enter account number: ");
@@ -106,8 +157,11 @@ public class BankSystem {
 			if (accountNumber.equalsIgnoreCase(account.getAccountNumber())) {
 				System.out.printf("Account: %s [%s]\n", account.getAccountName(), account.getAccountNumber());
 				System.out.printf("Available Balance: %f\n", account.getAvailableBalance());
+				return true;
 			}
 		}
+		System.out.println("Account doesn't exist.");
+		return false;
 	}
 
 	//	--- CHECKERS
