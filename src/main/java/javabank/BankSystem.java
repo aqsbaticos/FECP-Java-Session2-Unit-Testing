@@ -33,6 +33,7 @@ public class BankSystem {
 					viewAllAccounts();
 					break;
 				case "3":
+					viewBalance();
 					break;
 				case "4":
 					break;
@@ -94,6 +95,19 @@ public class BankSystem {
 			System.out.println("");
 		}
 		System.out.println("===================== END");
+	}
+
+	private static void viewBalance() {
+		System.out.println("");
+		System.out.println("=== Account Balance ===");
+		System.out.print("Enter account number: ");
+			String accountNumber = in.next();
+		for (BankAccount account: bankAccounts) {
+			if (accountNumber.equalsIgnoreCase(account.getAccountNumber())) {
+				System.out.printf("Account: %s [%s]\n", account.getAccountName(), account.getAccountNumber());
+				System.out.printf("Available Balance: %f\n", account.getAvailableBalance());
+			}
+		}
 	}
 
 	//	--- CHECKERS
