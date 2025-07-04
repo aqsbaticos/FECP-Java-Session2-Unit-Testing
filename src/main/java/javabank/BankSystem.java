@@ -27,7 +27,7 @@ public class BankSystem {
 				case "1":
 					boolean result = createAccount();
 					if (result) System.out.println("Account created successfully!");
-					else System.out.println("[ERROR] Please enter a valid number. Try again.");
+					else System.out.println("[ERROR] Please enter a valid input. Try again.");
 					break;
 				case "2":
 					viewAllAccounts();
@@ -64,6 +64,12 @@ public class BankSystem {
 		System.out.print("Enter Account Number: ");
 			accountNumber = in.next();
 		if (!isValidAccountNumber(accountNumber)) return false;
+		for (BankAccount account: bankAccounts) {
+			if (accountNumber.equalsIgnoreCase(account.getAccountNumber())) {
+				System.out.println("Account already exists.");
+				return false;
+			}
+		}
 
 		System.out.print("Enter Holder Name: ");
 			accountName = in.next();
